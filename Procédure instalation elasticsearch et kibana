@@ -25,13 +25,36 @@ curl localhost:9200
 #installation de Kibana
 sudo apt-get install kibana
 #Activer et démarer le service Kibana + vérification du status
-systemctl status elasticsearch
-systemctl enable elasticsearch
-systemctl start elasticsearch
-systemctl status elasticsearch
+systemctl status kibana
+systemctl enable kibana
+systemctl start kibana
+systemctl status kibana
 
 
 #Modification
 nano /etc/kibana/kibana.yml
     server.host : "0.0.0.0"
 systemctl restart kibana
+exit
+
+#Logstash et filebeat
+cd ~/elastic-stack-course/
+sudo apt install logstash
+sudo apt install filebeat
+
+#Configuration de Logstash (si besoin)
+cd /etc/logstash
+nano logstash.yml
+
+#Configuration de filebeat
+    #si besoin d'aller plus loins dans la configuration
+    cd /etc/filebeat
+    sudo nano filebeat.yml
+
+filebeat module enable system 
+filebeat setup
+systemctl start filebeat 
+systemctl status filebeat 
+systemctl enable filebeat 
+
+#Un nouvel indice est alors créé on peut le vérifier dans les dev tools de kibhana -> GET _cat/indices
